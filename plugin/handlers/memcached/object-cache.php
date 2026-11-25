@@ -1,4 +1,15 @@
 <?php
+/**
+ * Twee Cache for Memcached
+ *
+ * A high-performance, lightweight Memcached object cache built for large-scale WordPress projects.
+ *
+ * @package TweeCache
+ * @author  Andrii Toniievych
+ * @version 1.5.1
+ * @license https://opensource.org/license/mit MIT
+ * @link    https://github.com/TwistedAndy/twee-cache
+ */
 
 if (!defined('ABSPATH')) {
 	exit;
