@@ -245,12 +245,25 @@ class WP_Object_Cache
 
 	public function __construct()
 	{
-		// The Object Cache menu in the Admin Bar. The Twee Cache plugin adds its own menu and calls admin_bar() for the items of the handler.
-		add_action('admin_bar_menu', function(WP_Admin_Bar $admin_bar): void {
-			if (!function_exists('toc_admin_bar')) {
-				$this->admin_bar($admin_bar);
+		// The Object Cache menu, or a link in the WP Rocket menu. The Twee Cache plugin and Nexcess add their own.
+		add_action('admin_bar_init', function(): void {
+			if (!function_exists('toc_admin_bar') and !defined('Nexcess\MAPPS\PLUGIN_VERSION')) {
+				if (defined('WP_ROCKET_VERSION')) {
+					add_action('rocket_admin_bar_items', function(WP_Admin_Bar $admin_bar): void {
+						if (current_user_can(is_multisite() ? 'manage_network_options' : 'manage_options')) {
+							$admin_bar->add_node([
+								'id'     => 'twee-cache-flush',
+								'parent' => 'wp-rocket',
+								'title'  => 'Clear Object Cache',
+								'href'   => wp_nonce_url(add_query_arg('toc_action', 'flush'), 'toc_action'),
+							]);
+						}
+					});
+				} else {
+					add_action('admin_bar_menu', [$this, 'admin_bar'], 100);
+				}
 			}
-		}, 100);
+		});
 
 		// The Clean Cache link of the menu. The action runs before the page output starts, so the redirect can send its headers.
 		add_action('init', function(): void {

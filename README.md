@@ -57,6 +57,11 @@ The **Object Cache** menu shows to administrators. On multisite, only users with
 
 These values need no request to the backend. In wp-admin, the Admin Bar shows before most of the page, so the values of the page are not complete.
 
+Without the plugin, the drop-in does not add the menu when another plugin has a link that flushes the cache:
+
+- With the Nexcess plugin, the menu does not show. Nexcess has its own **Flush object cache** link.
+- With WP Rocket, the drop-in adds only a **Clear Object Cache** link to the **WP Rocket** menu.
+
 ## Cache Settings
 
 The **Cache Settings** page saves the settings in the `toc_settings` site option. A key is the name of its constant in lower case and without `WP_`, such as `redis_host` for `WP_REDIS_HOST`.
